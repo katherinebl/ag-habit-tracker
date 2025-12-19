@@ -22,5 +22,7 @@ export const isSameDay = (d1: Date, d2: Date): boolean => {
 
 export const getCurrentMonthDates = (): Date[] => {
     const now = new Date();
-    return getDaysInMonth(now.getFullYear(), now.getMonth());
+    const allDates = getDaysInMonth(now.getFullYear(), now.getMonth());
+    // Filter to only include dates up to today
+    return allDates.filter(date => date <= now);
 };

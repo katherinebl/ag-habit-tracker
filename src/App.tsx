@@ -10,7 +10,7 @@ function App() {
     <div className="min-h-screen bg-background p-8 flex justify-center">
       <div className="w-full max-w-6xl">
         <header className="mb-12 text-center">
-          <h1 className="text-4xl font-extrabold text-slate-800 mb-2 tracking-tight">Habit Tracker</h1>
+          <h1 className="text-4xl font-extrabold bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent mb-2 tracking-tight">Habit Tracker</h1>
           <p className="text-slate-500 text-lg">Build the life you want, one day at a time.</p>
         </header>
 

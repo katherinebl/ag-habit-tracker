@@ -9,10 +9,11 @@ export default {
       colors: {
         background: '#f8fafc', // Slate 50
         surface: '#ffffff',
-        primary: '#64748b', // Slate 500
-        secondary: '#94a3b8', // Slate 400
-        accent: '#f472b6', // Pink 400
-        success: '#4ade80', // Green 400
+        primary: '#8b5cf6', // Purple 500 - more vibrant
+        secondary: '#3b82f6', // Blue 500 - more vibrant
+        accent: '#ec4899', // Pink 500 - more vibrant
+        success: '#10b981', // Emerald 500 - more vibrant
+        warning: '#f59e0b', // Amber 500
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],

@@ -36,7 +36,7 @@ export const HabitGrid: React.FC<HabitGridProps> = ({ habits, onToggle, onDelete
                 particleCount: 100,
                 spread: 70,
                 origin: { y: 0.6 },
-                colors: ['#f472b6', '#4ade80', '#60a5fa']
+                colors: ['#8b5cf6', '#10b981', '#3b82f6', '#ec4899'] // Purple, Emerald, Blue, Pink
             });
         }
     };
@@ -97,14 +97,6 @@ export const HabitGrid: React.FC<HabitGridProps> = ({ habits, onToggle, onDelete
         return streak;
     };
 
-    if (habits.length === 0) {
-        return (
-            <div className="text-center py-20 bg-white rounded-3xl shadow-sm border border-slate-100">
-                <p className="text-slate-400 text-lg">No habits tracking yet. Add one above!</p>
-            </div>
-        );
-    }
-
     const [editingId, setEditingId] = useState<string | null>(null);
     const [editName, setEditName] = useState('');
 
@@ -125,6 +117,14 @@ export const HabitGrid: React.FC<HabitGridProps> = ({ habits, onToggle, onDelete
         setEditName('');
     };
 
+    if (habits.length === 0) {
+        return (
+            <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden p-12 text-center">
+                <p className="text-slate-400 text-lg">No habits yet. Start tracking by adding one above! 🎯</p>
+            </div>
+        );
+    }
+
     return (
         <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
             <div className="overflow-x-auto" ref={scrollContainerRef}>
@@ -137,13 +137,13 @@ export const HabitGrid: React.FC<HabitGridProps> = ({ habits, onToggle, onDelete
                                 return (
                                     <th key={date.toISOString()} className={clsx(
                                         "p-2 min-w-[50px] text-center text-sm font-medium",
-                                        isToday ? "text-accent" : "text-slate-400"
+                                        isToday ? "text-primary" : "text-slate-400"
                                     )}>
                                         <div className="flex flex-col items-center gap-1">
-                                            <span className="text-xs uppercase">{date.toLocaleDateString('en-US', { weekday: 'narrow' })}</span>
+                                            <span className="text-xs uppercase font-semibold">{date.toLocaleDateString('en-US', { weekday: 'narrow' })}</span>
                                             <span className={clsx(
-                                                "w-8 h-8 flex items-center justify-center rounded-full",
-                                                isToday && "bg-accent/10"
+                                                "w-8 h-8 flex items-center justify-center rounded-full font-semibold transition-all",
+                                                isToday && "bg-primary text-white shadow-md"
                                             )}>{date.getDate()}</span>
                                         </div>
                                     </th>
@@ -193,8 +193,8 @@ export const HabitGrid: React.FC<HabitGridProps> = ({ habits, onToggle, onDelete
                                                 className={clsx(
                                                     "w-8 h-8 rounded-full transition-all duration-300 flex items-center justify-center",
                                                     isCompleted
-                                                        ? "bg-success text-white scale-100 shadow-sm"
-                                                        : "bg-slate-100/50 text-transparent hover:bg-slate-200 scale-90 hover:scale-100"
+                                                        ? "bg-success text-white scale-100 shadow-md hover:shadow-lg hover:scale-105"
+                                                        : "bg-slate-100/50 text-transparent hover:bg-primary/20 hover:text-primary/50 scale-90 hover:scale-100"
                                                 )}
                                             >
                                                 <Check className="w-5 h-5" strokeWidth={3} />
@@ -203,23 +203,23 @@ export const HabitGrid: React.FC<HabitGridProps> = ({ habits, onToggle, onDelete
                                     );
                                 })}
                                 <td className="p-4 text-center">
-                                    <div className="flex items-center justify-center gap-1 text-orange-500 font-bold">
+                                    <div className="flex items-center justify-center gap-1 text-warning font-bold">
                                         <Flame className="w-5 h-5 fill-current" />
-                                        <span>{calculateStreak(habit)}</span>
+                                        <span className="text-lg">{calculateStreak(habit)}</span>
                                     </div>
                                 </td>
                                 <td className="p-4 text-center">
                                     <div className="flex items-center justify-center gap-1 opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity">
                                         <button
                                             onClick={() => startEdit(habit)}
-                                            className="p-2 text-slate-300 hover:text-secondary transition-colors"
+                                            className="p-2 text-slate-300 hover:text-secondary hover:bg-secondary/10 rounded-lg transition-all"
                                             title="Edit"
                                         >
                                             <Pencil className="w-4 h-4" />
                                         </button>
                                         <button
                                             onClick={() => onDelete(habit.id)}
-                                            className="p-2 text-slate-300 hover:text-red-400 transition-colors"
+                                            className="p-2 text-slate-300 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
                                             title="Delete"
                                         >
                                             <Trash2 className="w-4 h-4" />

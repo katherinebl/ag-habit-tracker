@@ -27,7 +27,7 @@ export const HabitForm: React.FC<HabitFormProps> = ({ onAdd }) => {
             />
             <button
                 type="submit"
-                className="px-8 py-4 bg-primary text-white rounded-xl shadow-lg hover:bg-slate-700 transition-all font-semibold flex items-center gap-2 hover:translate-y-[-1px]"
+                className="px-8 py-4 bg-primary text-white rounded-xl shadow-lg hover:bg-purple-600 transition-all font-semibold flex items-center gap-2 hover:translate-y-[-1px] hover:shadow-xl"
             >
                 <Plus className="w-5 h-5" />
                 Add
