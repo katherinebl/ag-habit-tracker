@@ -8,13 +8,16 @@ const STORAGE_KEY = 'ag-habit-tracker-data';
 const suggestEmoji = (name: string): string => {
     const lower = name.toLowerCase();
     if (lower.includes('water') || lower.includes('drink')) return '💧';
-    if (lower.includes('run') || lower.includes('jog')) return '🏃';
+    if (lower.includes('cook')) return '👩🏻‍🍳';
+    if (lower.includes('run') || lower.includes('jog')) return '🏃🏻‍♀️‍➡️'
     if (lower.includes('read') || lower.includes('book')) return '📚';
+    if (lower.includes('journal')) return '📝';
     if (lower.includes('gym') || lower.includes('workout') || lower.includes('exercise')) return '💪';
     if (lower.includes('sleep') || lower.includes('bed')) return '😴';
-    if (lower.includes('meditate')) return '🧘';
+    if (lower.includes('meditate')) return '🧘🏻‍♀️';
     if (lower.includes('code') || lower.includes('program')) return '💻';
-    if (lower.includes('walk')) return '🚶';
+    if (lower.includes('walk')) return '🏃🏻‍♀️‍➡️';
+    if (lower.includes('gardening')) return '🪴';
     return '✨'; // Default
 };
 
