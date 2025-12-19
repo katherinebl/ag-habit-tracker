@@ -149,7 +149,8 @@ export const HabitGrid: React.FC<HabitGridProps> = ({ habits, onToggle, onDelete
                                     </th>
                                 );
                             })}
-                            <th className="p-4 min-w-[100px] font-semibold text-slate-600">Streak</th>
+                            <th className="p-4 min-w-[100px] font-semibold text-slate-600 text-center">Total</th>
+                            <th className="p-4 min-w-[100px] font-semibold text-slate-600 text-center">Streak</th>
                             <th className="p-4 min-w-[100px] text-center">Actions</th>
                         </tr>
                     </thead>
@@ -202,6 +203,12 @@ export const HabitGrid: React.FC<HabitGridProps> = ({ habits, onToggle, onDelete
                                         </td>
                                     );
                                 })}
+                                <td className="p-4 text-center">
+                                    <div className="flex items-center justify-center gap-1 text-success font-bold">
+                                        <Check className="w-5 h-5" strokeWidth={2.5} />
+                                        <span className="text-lg">{habit.completedDates.length}</span>
+                                    </div>
+                                </td>
                                 <td className="p-4 text-center">
                                     <div className="flex items-center justify-center gap-1 text-warning font-bold">
                                         <Flame className="w-5 h-5 fill-current" />
