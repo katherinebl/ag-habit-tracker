@@ -33,6 +33,17 @@ export const useHabits = () => {
 
     const addHabit = (name: string) => {
         if (!name.trim()) return;
+
+        // Check if habit with same name already exists (case-insensitive)
+        const habitExists = habits.some(
+            habit => habit.name.toLowerCase() === name.trim().toLowerCase()
+        );
+
+        if (habitExists) {
+            alert('A habit with this name already exists!');
+            return;
+        }
+
         const newHabit: Habit = {
             id: crypto.randomUUID(),
             name: name.trim(),
@@ -62,6 +73,16 @@ export const useHabits = () => {
     };
 
     const editHabit = (id: string, name: string) => {
+        // Check if another habit with the same name already exists (excluding current habit)
+        const habitExists = habits.some(
+            habit => habit.id !== id && habit.name.toLowerCase() === name.toLowerCase()
+        );
+
+        if (habitExists) {
+            alert('A habit with this name already exists!');
+            return;
+        }
+
         setHabits(prev => prev.map(h => {
             if (h.id === id) {
                 return { ...h, name };

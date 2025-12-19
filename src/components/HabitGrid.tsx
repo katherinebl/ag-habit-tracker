@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { Trash2, Check, Flame, Pencil } from 'lucide-react';
+import { Trash2, Check, Pencil } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import clsx from 'clsx';
 import type { Habit } from '../types';
@@ -41,61 +41,7 @@ export const HabitGrid: React.FC<HabitGridProps> = ({ habits, onToggle, onDelete
         }
     };
 
-    const calculateStreak = (habit: Habit): number => {
-        let streak = 0;
-        const today = new Date();
-        const todayKey = formatDateKey(today);
 
-        // Check if today is completed
-        let isStreakActive = habit.completedDates.includes(todayKey);
-
-        // If not completed today, check yesterday to see if streak is still alive
-        if (!isStreakActive) {
-            const yesterday = new Date(today);
-            yesterday.setDate(yesterday.getDate() - 1);
-            if (habit.completedDates.includes(formatDateKey(yesterday))) {
-                isStreakActive = true;
-            }
-        }
-
-        // If streak is not active (neither today nor yesterday done), return 0
-        // Wait, if I did it yesterday but not today, streak should be current streak?
-        // Usually apps show "Current Streak" as 5 days. If I miss today, it stays 5 until midnight tomorrow?
-        // Or does it become 0 immediately if I miss a day?
-        // Standard behavior: 
-        // - If Done Today: Streak = Previous + 1
-        // - If Not Done Today: Streak = Previous (pending today)
-        // - If Not Done Yesterday: Streak = 0.
-
-        // Let's implement: Iterating backwards.
-        // Start check from TODAY. 
-        // If today is NOT done, we treat it as potentially "pending".
-        //   -> So we check yesterday. If yesterday is NOT done -> Streak 0.
-        //   -> If yesterday IS done -> Streak starts tallying from yesterday.
-        // If today IS done -> Streak starts tallying from today.
-
-        let checkDate = new Date();
-
-        if (!habit.completedDates.includes(todayKey)) {
-            checkDate.setDate(checkDate.getDate() - 1);
-            if (!habit.completedDates.includes(formatDateKey(checkDate))) {
-                return 0;
-            }
-        }
-
-        // Loop backwards
-        for (let i = 0; i < 365; i++) {
-            const key = formatDateKey(checkDate);
-            if (habit.completedDates.includes(key)) {
-                streak++;
-                checkDate.setDate(checkDate.getDate() - 1);
-            } else {
-                break;
-            }
-        }
-
-        return streak;
-    };
 
     const [editingId, setEditingId] = useState<string | null>(null);
     const [editName, setEditName] = useState('');
@@ -150,7 +96,6 @@ export const HabitGrid: React.FC<HabitGridProps> = ({ habits, onToggle, onDelete
                                 );
                             })}
                             <th className="p-4 min-w-[100px] font-semibold text-slate-600 text-center">Total</th>
-                            <th className="p-4 min-w-[100px] font-semibold text-slate-600 text-center">Streak</th>
                             <th className="p-4 min-w-[100px] text-center">Actions</th>
                         </tr>
                     </thead>
@@ -207,12 +152,6 @@ export const HabitGrid: React.FC<HabitGridProps> = ({ habits, onToggle, onDelete
                                     <div className="flex items-center justify-center gap-1 text-success font-bold">
                                         <Check className="w-5 h-5" strokeWidth={2.5} />
                                         <span className="text-lg">{habit.completedDates.length}</span>
-                                    </div>
-                                </td>
-                                <td className="p-4 text-center">
-                                    <div className="flex items-center justify-center gap-1 text-warning font-bold">
-                                        <Flame className="w-5 h-5 fill-current" />
-                                        <span className="text-lg">{calculateStreak(habit)}</span>
                                     </div>
                                 </td>
                                 <td className="p-4 text-center">
