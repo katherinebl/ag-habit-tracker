@@ -9,7 +9,7 @@ interface HabitGridProps {
     habits: Habit[];
     onToggle: (id: string, date: Date) => void;
     onDelete: (id: string) => void;
-    onEdit: (id: string, name: string) => void;
+    onEdit: (id: string, name: string, emoji?: string) => void;
 }
 
 export const HabitGrid: React.FC<HabitGridProps> = ({ habits, onToggle, onDelete, onEdit }) => {
@@ -45,6 +45,8 @@ export const HabitGrid: React.FC<HabitGridProps> = ({ habits, onToggle, onDelete
 
     const [editingId, setEditingId] = useState<string | null>(null);
     const [editName, setEditName] = useState('');
+    const [editingEmojiId, setEditingEmojiId] = useState<string | null>(null);
+    const [editEmoji, setEditEmoji] = useState('');
 
     const startEdit = (habit: Habit) => {
         setEditingId(habit.id);
@@ -61,6 +63,23 @@ export const HabitGrid: React.FC<HabitGridProps> = ({ habits, onToggle, onDelete
     const cancelEdit = () => {
         setEditingId(null);
         setEditName('');
+    };
+
+    const startEmojiEdit = (habit: Habit) => {
+        setEditingEmojiId(habit.id);
+        setEditEmoji(habit.emoji);
+    };
+
+    const saveEmojiEdit = (habit: Habit) => {
+        if (editEmoji.trim()) {
+            onEdit(habit.id, habit.name, editEmoji.trim());
+        }
+        setEditingEmojiId(null);
+    };
+
+    const cancelEmojiEdit = () => {
+        setEditingEmojiId(null);
+        setEditEmoji('');
     };
 
     if (habits.length === 0) {
@@ -104,7 +123,29 @@ export const HabitGrid: React.FC<HabitGridProps> = ({ habits, onToggle, onDelete
                             <tr key={habit.id} className="group hover:bg-slate-50/50 transition-colors border-b border-slate-50 last:border-0">
                                 <td className="p-4 sticky left-0 bg-white group-hover:bg-slate-50/50 z-20 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.05)]">
                                     <div className="flex items-center gap-3">
-                                        <span className="text-2xl">{habit.emoji}</span>
+                                        {editingEmojiId === habit.id ? (
+                                            <input
+                                                autoFocus
+                                                type="text"
+                                                value={editEmoji}
+                                                onChange={(e) => setEditEmoji(e.target.value)}
+                                                onBlur={() => saveEmojiEdit(habit)}
+                                                onKeyDown={(e) => {
+                                                    if (e.key === 'Enter') saveEmojiEdit(habit);
+                                                    if (e.key === 'Escape') cancelEmojiEdit();
+                                                }}
+                                                className="text-2xl w-12 h-12 text-center bg-slate-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent/50"
+                                                maxLength={2}
+                                            />
+                                        ) : (
+                                            <span
+                                                className="text-2xl cursor-pointer hover:bg-slate-100 rounded-lg p-1 transition-colors"
+                                                onClick={() => startEmojiEdit(habit)}
+                                                title="Click to edit emoji"
+                                            >
+                                                {habit.emoji}
+                                            </span>
+                                        )}
                                         {editingId === habit.id ? (
                                             <input
                                                 autoFocus

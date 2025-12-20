@@ -72,7 +72,7 @@ export const useHabits = () => {
         setHabits(prev => prev.filter(h => h.id !== id));
     };
 
-    const editHabit = (id: string, name: string) => {
+    const editHabit = (id: string, name: string, emoji?: string) => {
         // Check if another habit with the same name already exists (excluding current habit)
         const habitExists = habits.some(
             habit => habit.id !== id && habit.name.toLowerCase() === name.toLowerCase()
@@ -85,7 +85,11 @@ export const useHabits = () => {
 
         setHabits(prev => prev.map(h => {
             if (h.id === id) {
-                return { ...h, name };
+                return { 
+                    ...h, 
+                    name,
+                    ...(emoji !== undefined && { emoji })
+                };
             }
             return h;
         }));
